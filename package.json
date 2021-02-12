@@ -1,0 +1,26 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "Generates a webpage displaying information on various members of a development team.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluesatyr/team-profile-generator.git"
+  },
+  "author": "Shawn E.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bluesatyr/team-profile-generator/issues"
+  },
+  "homepage": "https://github.com/bluesatyr/team-profile-generator#readme",
+  "dependencies": {
+    "inquirer": "^7.3.3",
+    "jest": "^26.6.3"
+  }
+}

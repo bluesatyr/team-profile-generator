@@ -2,6 +2,12 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const teamData = [];
 
+/* Class Constructors */
+const Intern = require('./lib/Intern');
+const Engineer = require('./lib/Engineer');
+const Manager = require('./lib/Manager');
+
+
 // Initial set of questions common to all employees
 const promptEmployee =  () => {
   
@@ -49,6 +55,27 @@ Add a New Employee
     });
 };
 
+const createTeamInstance = (data) => {
+    const employeeId = (teamData.length + 1);
+    switch (data.role){
+        case 'Manager':
+            let manager = new Manager(data.name, employeeId, data.email, data.officeNumber);
+            teamData.push(manager);
+            console.log(teamData);
+            break;
+        case 'Engineer':
+            let engineer = new Engineer(data.name, employeeId, data.email, data.github);
+            teamData.push(engineer);
+            console.log(teamData);
+            break;
+        case 'Intern':
+            let intern = new Intern(data.name, employeeId, data.email, data.school);
+            teamData.push(intern);
+            console.log(teamData);
+            break;
+    };
+};
+
 // More questions for those who have Manager role
 const promptManager = (data) => {
     const roleInfo = inquirer.prompt([
@@ -73,7 +100,7 @@ const promptManager = (data) => {
         }
     ]).then((roleInfo) => {
         data.officeNumber = roleInfo.officeNumber;
-        teamData.push(data);
+        createTeamInstance(data);
         if (roleInfo.confirmAddEmployee) {
             return promptEmployee();
         } else {
@@ -107,7 +134,7 @@ const promptEngineer = (data) => {
         }
     ]).then((roleInfo) => {
         data.github = roleInfo.github;
-        teamData.push(data);
+        createTeamInstance(data);
         if (roleInfo.confirmAddEmployee) {
             return promptEmployee();
         } else {
@@ -141,7 +168,7 @@ const promptIntern = (data) => {
         }
     ]).then((roleInfo) => {
         data.school = roleInfo.school;
-        teamData.push(data);
+        createTeamInstance(data);
         if (roleInfo.confirmAddEmployee) {
             return promptEmployee();
         } else {

@@ -1,18 +1,10 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const teamData = [];
-//from portfolio generator
-/* const promptEmployee = teamData => {
-    if (!teamData){
-        teamData = [];
-    } */
 
 // Initial set of questions common to all employees
 const promptEmployee =  () => {
-/*   if (!teamData){
-        teamData = [];
-    }
-*/   
+  
     console.log(`
 ===================
 Add a New Employee

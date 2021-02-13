@@ -48,7 +48,7 @@ Add a New Employee
             }
         }
     }]);
-}
+};
 
 const promptManager = (data) => {
     const roleInfo = inquirer.prompt([
@@ -150,8 +150,11 @@ const promptRole = (data) => {
     
 }
 
-let mockData = { name: 'Shawn', role: 'Manager', email: 'shawnevans.music' }
-promptRole(mockData);
+promptEmployee()
+    .then((data) => {
+        promptRole(data);
+    });
+
 
 //promptEmployee().then((data) => {console.log(data)});
 

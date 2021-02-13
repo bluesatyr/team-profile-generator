@@ -7,7 +7,7 @@ const teamData = [];
         teamData = [];
     } */
 
-
+// Initial set of questions common to all employees
 const promptEmployee =  () => {
     console.log(`
 ===================
@@ -50,6 +50,7 @@ Add a New Employee
     }]);
 };
 
+// More questions for those who have Manager role
 const promptManager = (data) => {
     const roleInfo = inquirer.prompt([
         {   // for manager if manager chosen
@@ -78,6 +79,7 @@ const promptManager = (data) => {
     });
 };
 
+// More questions for those who have Engineer role
 const promptEngineer = (data) => {
     const roleInfo = inquirer.prompt([
         {   // for engineer if engineer chosen
@@ -106,6 +108,7 @@ const promptEngineer = (data) => {
     });
 };
 
+// More questions for those who have Intern role
 const promptIntern = (data) => {
     const roleInfo = inquirer.prompt([
         {   // for intern if intern is chosen
@@ -135,7 +138,7 @@ const promptIntern = (data) => {
 };
 
 
-
+// call prompt more questions depending on role
 const promptRole = (data) => {
     switch (data.role) {
         case 'Manager':
@@ -150,6 +153,7 @@ const promptRole = (data) => {
     
 }
 
+// main function calls
 promptEmployee()
     .then((data) => {
         promptRole(data);

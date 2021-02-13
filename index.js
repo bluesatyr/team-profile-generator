@@ -9,6 +9,10 @@ const teamData = [];
 
 // Initial set of questions common to all employees
 const promptEmployee =  () => {
+/*   if (!teamData){
+        teamData = [];
+    }
+*/   
     console.log(`
 ===================
 Add a New Employee
@@ -47,7 +51,10 @@ Add a New Employee
                 return false;
             }
         }
-    }]);
+    }
+    ]).then((data) => {
+        promptRole(data);
+    });
 };
 
 // More questions for those who have Manager role
@@ -73,9 +80,14 @@ const promptManager = (data) => {
             default: true
         }
     ]).then((roleInfo) => {
-    data.officeNumber = roleInfo.officeNumber;
-    teamData.push(data);
-    console.log(teamData);
+        data.officeNumber = roleInfo.officeNumber;
+        teamData.push(data);
+        if (roleInfo.confirmAddEmployee) {
+            return promptEmployee();
+        } else {
+            console.log(teamData);
+            return teamData;
+        }
     });
 };
 
@@ -102,9 +114,14 @@ const promptEngineer = (data) => {
             default: true
         }
     ]).then((roleInfo) => {
-    data.github = roleInfo.github;
-    teamData.push(data);
-    console.log(teamData);
+        data.github = roleInfo.github;
+        teamData.push(data);
+        if (roleInfo.confirmAddEmployee) {
+            return promptEmployee();
+        } else {
+            console.log(teamData);
+            return teamData;
+        }
     });
 };
 
@@ -131,9 +148,14 @@ const promptIntern = (data) => {
             default: true
         }
     ]).then((roleInfo) => {
-    data.school = roleInfo.school;
-    teamData.push(data);
-    console.log(teamData);
+        data.school = roleInfo.school;
+        teamData.push(data);
+        if (roleInfo.confirmAddEmployee) {
+            return promptEmployee();
+        } else {
+            console.log(teamData);
+            return teamData;
+        }
     });
 };
 
@@ -149,15 +171,12 @@ const promptRole = (data) => {
             break;
         case 'Intern':
             return promptIntern(data);
-    }
-    
-}
+    }  
+};
 
 // main function calls
-promptEmployee()
-    .then((data) => {
-        promptRole(data);
-    });
+promptEmployee();
+console.log(teamData);
 
 
 //promptEmployee().then((data) => {console.log(data)});

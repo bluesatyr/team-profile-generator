@@ -1,12 +1,14 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-
+const teamData = [];
 //from portfolio generator
-const promptEmployee = teamData => {
-    if (!teamData.employees){
-        teamData.employees = [];
-    }
-    
+/* const promptEmployee = teamData => {
+    if (!teamData){
+        teamData = [];
+    } */
+const promptEmployee =  () => {
+
+
     console.log(`
 ===================
 Add a New Employee
@@ -28,64 +30,131 @@ Add a New Employee
         }
     },
     {
-        type: 'input',
-        name: 'email',
-        message: 'What is your email address? (Required)',
-        validate: nameInput => {
-            if (nameInput) {
-                return true;
-            } else {
-                console.log('Please Enter your email address!');
-                return false;
-            }
-        }
-    },
-    {   // for intern if intern is chosen
-        type: 'input',
-        name: 'school',
-        message: 'What is the name of your school? (Required)',
-        validate: nameInput => {
-            if (nameInput) {
-                return true;
-            } else {
-                console.log('Please Enter the name of your School!');
-                return false;
-            }
-        }
-    },
-    {   // for engineer if engineer chosen
-        type: 'input',
-        name: 'github',
-        message: 'What is your GitHub Username? (Required)',
-        validate: nameInput => {
-            if (nameInput) {
-                return true;
-            } else {
-                console.log('Please Enter your GitHub Username!');
-                return false;
-            }
-        }
-    },
-    {   // for manager if manager chosen
-        type: 'input',
-        name: 'officeNumber',
-        message: 'What is your Office Number (Required):',
-        validate: nameInput => {
-            if (nameInput) {
-                return true;
-            } else {
-                console.log('Please Enter your Office Number!');
-                return false;
-            }
-        }
+        type: 'list',
+        name: 'role',
+        message: 'What role does this employee have?',
+        choices: ['Manager', 'Engineer', 'Intern']
     },
     {
-        type: 'confirm',
-        name: 'confirmAddEmployee',
-        message: 'Would you like to add another employee?',
-        default: true
+        type: 'input',
+        name: 'email',
+        message: "What is the employee's email address? (Required)",
+        validate: nameInput => {
+            if (nameInput) {
+                return true;
+            } else {
+                console.log('Please Enter an email address!');
+                return false;
+            }
+        }
+    }]);
+}
+
+const promptManager = (data) => {
+    const roleInfo = inquirer.prompt([
+        {   // for manager if manager chosen
+            type: 'input',
+            name: 'officeNumber',
+            message: 'What is your Office Number (Required):',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log('Please Enter your Office Number!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'confirm',
+            name: 'confirmAddEmployee',
+            message: 'Would you like to add another employee?',
+            default: true
+        }
+    ]).then((roleInfo) => {
+    data.officeNumber = roleInfo.officeNumber;
+    teamData.push(data);
+    console.log(teamData);
+    });
+};
+
+const promptEngineer = (data) => {
+    const roleInfo = inquirer.prompt([
+        {   // for engineer if engineer chosen
+            type: 'input',
+            name: 'github',
+            message: 'What is your GitHub Username? (Required)',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log('Please Enter your GitHub Username!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'confirm',
+            name: 'confirmAddEmployee',
+            message: 'Would you like to add another employee?',
+            default: true
+        }
+    ]).then((roleInfo) => {
+    data.officeNumber = roleInfo.officeNumber;
+    teamData.push(data);
+    console.log(teamData);
+    });
+};
+
+const promptIntern = (data) => {
+    const roleInfo = inquirer.prompt([
+        {   // for intern if intern is chosen
+            type: 'input',
+            name: 'school',
+            message: 'What is the name of your school? (Required)',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log('Please Enter the name of your School!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'confirm',
+            name: 'confirmAddEmployee',
+            message: 'Would you like to add another employee?',
+            default: true
+        }
+    ]).then((roleInfo) => {
+    data.officeNumber = roleInfo.officeNumber;
+    teamData.push(data);
+    console.log(teamData);
+    });
+};
+
+
+
+const promptRole = (data) => {
+    switch (data.role) {
+        case 'Manager':
+            return promptManager(data);
+            break;
+        case 'Engineer':
+            return promptEngineer(data);
+            break;
+        case 'Intern':
+            return promptIntern(data);
     }
-]);
+    
+}
+
+let mockData = { name: 'Shawn', role: 'Manager', email: 'shawnevans.music' }
+promptRole(mockData);
+
+//promptEmployee().then((data) => {console.log(data)});
+
 
 // call inquire to run CLI answers - promptUser()
 // use answers to construct newEmployee classes based on roles

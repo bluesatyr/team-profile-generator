@@ -6,9 +6,9 @@ const teamData = [];
     if (!teamData){
         teamData = [];
     } */
+
+
 const promptEmployee =  () => {
-
-
     console.log(`
 ===================
 Add a New Employee
@@ -100,7 +100,7 @@ const promptEngineer = (data) => {
             default: true
         }
     ]).then((roleInfo) => {
-    data.officeNumber = roleInfo.officeNumber;
+    data.github = roleInfo.github;
     teamData.push(data);
     console.log(teamData);
     });
@@ -128,7 +128,7 @@ const promptIntern = (data) => {
             default: true
         }
     ]).then((roleInfo) => {
-    data.officeNumber = roleInfo.officeNumber;
+    data.school = roleInfo.school;
     teamData.push(data);
     console.log(teamData);
     });

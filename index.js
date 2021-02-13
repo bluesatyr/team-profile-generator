@@ -1,5 +1,5 @@
-const fs = require('fs');
 const inquirer = require('inquirer');
+const generateHTML = require('./src/page-template');
 const teamData = [];
 
 /* Class Constructors */
@@ -55,25 +55,32 @@ Add a New Employee
     });
 };
 
+// create instances from inquirer data
 const createTeamInstance = (data) => {
+    // insure employee id of new instance is the correct number
     const employeeId = (teamData.length + 1);
+    // create new class instances based on role 
     switch (data.role){
         case 'Manager':
             let manager = new Manager(data.name, employeeId, data.email, data.officeNumber);
             teamData.push(manager);
             console.log(teamData);
+            return teamData;
             break;
         case 'Engineer':
             let engineer = new Engineer(data.name, employeeId, data.email, data.github);
             teamData.push(engineer);
             console.log(teamData);
+            return teamData;
             break;
         case 'Intern':
             let intern = new Intern(data.name, employeeId, data.email, data.school);
             teamData.push(intern);
             console.log(teamData);
+            return teamData;
             break;
     };
+    
 };
 
 // More questions for those who have Manager role
@@ -100,12 +107,11 @@ const promptManager = (data) => {
         }
     ]).then((roleInfo) => {
         data.officeNumber = roleInfo.officeNumber;
-        createTeamInstance(data);
+        const result = createTeamInstance(data);
         if (roleInfo.confirmAddEmployee) {
             return promptEmployee();
         } else {
-            console.log(teamData);
-            return teamData;
+            return result;
         }
     });
 };
@@ -134,12 +140,11 @@ const promptEngineer = (data) => {
         }
     ]).then((roleInfo) => {
         data.github = roleInfo.github;
-        createTeamInstance(data);
+        const result = createTeamInstance(data);
         if (roleInfo.confirmAddEmployee) {
             return promptEmployee();
         } else {
-            console.log(teamData);
-            return teamData;
+            return result;
         }
     });
 };
@@ -168,18 +173,17 @@ const promptIntern = (data) => {
         }
     ]).then((roleInfo) => {
         data.school = roleInfo.school;
-        createTeamInstance(data);
+        const result = createTeamInstance(data);
         if (roleInfo.confirmAddEmployee) {
             return promptEmployee();
         } else {
-            console.log(teamData);
-            return teamData;
+            return result;
         }
     });
 };
 
 
-// call prompt more questions depending on role
+// prompt user for more questions depending on employee role 
 const promptRole = (data) => {
     switch (data.role) {
         case 'Manager':
@@ -193,17 +197,23 @@ const promptRole = (data) => {
     }  
 };
 
-// main function calls
+
+
 promptEmployee();
-console.log(teamData);
 
 
-//promptEmployee().then((data) => {console.log(data)});
+
+/*
+promptEmployee -> return data
+promptRole -> promptManager, promptEngineer OR promptIntern -> add roleInfo to data
+createInstance -> takes data and creates a new instance of correct role saving it to teamData array
+generateHTML & generateCard -> takes instances in the teamData and creates cards based on each instance
+writeFile and copyFile creates the html file in dist/ and moves a copy of CSS to dist/
+*/
 
 
-// call inquire to run CLI answers - promptUser()
-// use answers to construct newEmployee classes based on roles
-// id is determined by index of member +1? employee.id = members.length; then -> members.push(member)
+
+// .then((data) => {console.log(data)});
 // use new Classes to generate cards for the HTML
 // generateHTML then write file and move to dist 
 
@@ -231,3 +241,4 @@ console.log(teamData);
     console.log(err);
   });
   */
+

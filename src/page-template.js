@@ -3,16 +3,22 @@
 const generateCards = teamData => {
   // text of all cards to be added to page html
   let cardsHTML = '';
-  for (let i = 0; i < teamData.length; i++) {
-    const teamMember = teamData.shift();
+  const iterator = teamData.length;
+  for (let i = 0; i < iterator ; i++) {
+    let teamMember;
+    if (teamData.length === 1){
+        teamMember = teamData[0];
+    } else {
+        teamMember = teamData.shift();
+    }
     // get role specific info for cards
     switch (teamMember.getRole()) {
       case 'Manager':
-        var roleInfo = `Office ${teamMember.getOffice()}`;
+        var roleInfo = `Office: ${teamMember.getOffice()}`;
         var roleIcon = "fas fa-crown";
         break;
       case 'Engineer':
-        var roleInfo = `GitHub: https://github.com/${teamMember.getGithub()}/`;
+        var roleInfo = `GitHub: ${teamMember.getGithub()}`;
         var roleIcon = "fas fa-laptop-code";
         break;
       case 'Intern':
@@ -28,19 +34,17 @@ const generateCards = teamData => {
       </div>
       <div class="employee-info">
         <div class="employee-id">ID: ${teamMember.getId()}</div>
-        <div class="email">${teamMember.getEmail()}</div>
+        <div class="email">email: ${teamMember.getEmail()}</div>
         <div class="role-info">${roleInfo}</div>
       </div>
     </div>`;
     cardsHTML += card;
   };
-
   return cardsHTML;
 }
 
 //
 const generateHTML = (teamData) => {
-  console.log(teamData);
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -50,7 +54,7 @@ const generateHTML = (teamData) => {
       <title>Our Team</title>
       <!-- Font Awesome -->
       <script src="https://kit.fontawesome.com/ab5ed30506.js"></script>
-      <link rel="stylesheet" href="./test.css"> 
+      <link rel="stylesheet" href="./style.css"> 
   </head>
   <body>
       <header>
@@ -58,7 +62,7 @@ const generateHTML = (teamData) => {
       </header>
       <main>
           <div class="flex-container">
-            ${teamData}
+          ${generateCards(teamData)}
           </div>
       </main>
   </body>

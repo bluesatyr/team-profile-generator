@@ -18,7 +18,7 @@ const generateCards = teamData => {
         var roleIcon = "fas fa-crown";
         break;
       case 'Engineer':
-        var roleInfo = `GitHub: ${teamMember.getGithub()}`;
+        var roleInfo = `GitHub: <a href="https://github.com/${teamMember.getGithub()}" target="_blank">${teamMember.getGithub()}</a>`;
         var roleIcon = "fas fa-laptop-code";
         break;
       case 'Intern':
@@ -34,7 +34,7 @@ const generateCards = teamData => {
       </div>
       <div class="employee-info">
         <div class="employee-id">ID: ${teamMember.getId()}</div>
-        <div class="email">email: ${teamMember.getEmail()}</div>
+        <div class="email">email: <a href="mailto:${teamMember.getEmail()}">${teamMember.getEmail()}</a></div>
         <div class="role-info">${roleInfo}</div>
       </div>
     </div>`;

@@ -41,6 +41,7 @@ const generateCards = teamData => {
 
 //
 const generateHTML = (teamData) => {
+  console.log(teamData);
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -58,7 +59,7 @@ const generateHTML = (teamData) => {
       </header>
       <main>
           <div class="flex-container">
-            ${generateCards(teamData)}
+            ${teamData}
           </div>
       </main>
   </body>

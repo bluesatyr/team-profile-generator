@@ -1,5 +1,7 @@
 const inquirer = require('inquirer');
 const generateHTML = require('./src/page-template');
+const { writeFile, copyFile } = require('./utils/generate-site.js');
+
 const teamData = [];
 
 /* Class Constructors */
@@ -60,28 +62,21 @@ Add a New Employee
 const createTeamInstance = (data) => {
     // insure employee id of new instance is the correct number
     const employeeId = (teamData.length + 1);
-    // create new class instances based on role 
+    // create new class instances based on role
+    let teamMember; 
     switch (data.role){
         case 'Manager':
-            let manager = new Manager(data.name, employeeId, data.email, data.officeNumber);
-            teamData.push(manager);
-            console.log(teamData);
-            return teamData;
+            teamMember = new Manager(data.name, employeeId, data.email, data.officeNumber);
             break;
         case 'Engineer':
-            let engineer = new Engineer(data.name, employeeId, data.email, data.github);
-            teamData.push(engineer);
-            console.log(teamData);
-            return teamData;
+            teamMember = new Engineer(data.name, employeeId, data.email, data.github);
             break;
         case 'Intern':
-            let intern = new Intern(data.name, employeeId, data.email, data.school);
-            teamData.push(intern);
-            console.log(teamData);
-            return teamData;
-            break;
+            teamMember = new Intern(data.name, employeeId, data.email, data.school);
     };
-    
+    teamData.push(teamMember);
+    console.log(teamData);
+    return teamData;
 };
 
 // More questions for those who have Manager role
@@ -188,24 +183,25 @@ const promptIntern = (data) => {
 const promptRole = (data) => {
     switch (data.role) {
         case 'Manager':
-            return promptManager(data);
+            promptManager(data);
             break;
         case 'Engineer':
-            return promptEngineer(data);
+            promptEngineer(data);
             break;
         case 'Intern':
-            return promptIntern(data);
+            promptIntern(data);
     }  
 };
 
 
+promptEmployee();
 
-promptEmployee()
+
 
 
 
 /*
-promptEmployee -> return data
+promptEmployee -> return data *Promise*
 promptRole -> promptManager, promptEngineer OR promptIntern -> add roleInfo to data
 createInstance -> takes data and creates a new instance of correct role saving it to teamData array <-- should i create an array of objects then make class instances?
 IF (confirmAddEmployee) {promptEmployee()}

@@ -6,6 +6,10 @@
 
 Creates a website of Team Members based upon Command Line input from the user.
 
+## Screenshot
+
+![Final site](./images/screenshot.png)
+
 ## Table of Contents 
 
 * [Installation](#installation)

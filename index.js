@@ -50,7 +50,8 @@ Add a New Employee
             }
         }
     }
-    ]).then((data) => {
+    ])
+    .then((data) => {
         promptRole(data);
     });
 };
@@ -199,14 +200,15 @@ const promptRole = (data) => {
 
 
 
-promptEmployee();
+promptEmployee()
 
 
 
 /*
 promptEmployee -> return data
 promptRole -> promptManager, promptEngineer OR promptIntern -> add roleInfo to data
-createInstance -> takes data and creates a new instance of correct role saving it to teamData array
+createInstance -> takes data and creates a new instance of correct role saving it to teamData array <-- should i create an array of objects then make class instances?
+IF (confirmAddEmployee) {promptEmployee()}
 generateHTML & generateCard -> takes instances in the teamData and creates cards based on each instance
 writeFile and copyFile creates the html file in dist/ and moves a copy of CSS to dist/
 */

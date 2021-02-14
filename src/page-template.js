@@ -4,11 +4,11 @@ const generateCards = teamData => {
   // text of all cards to be added to page html
   let cardsHTML = '';
   for (let i = 0; i < teamData.length; i++) {
-    const teamMember = teamData[i]
+    const teamMember = teamData.shift();
     // get role specific info for cards
-    switch (teamMember.getRole) {
+    switch (teamMember.getRole()) {
       case 'Manager':
-        var roleInfo = `Office ${teamMember.getOffice}`;
+        var roleInfo = `Office ${teamMember.getOffice()}`;
         var roleIcon = "fas fa-crown";
         break;
       case 'Engineer':
@@ -21,18 +21,17 @@ const generateCards = teamData => {
     };
     // create card using team data array.
     const card = `
-  <div class="card">
-    <div class="employee">
-        <h2>${teamMember.getName()}</h2>
-        <i class="${roleIcon}"></i><span class="role">${teamMember.getRole()}</span>
-    </div>
-    <div class="employee-info">
-      <div class="employee-id">ID: ${teamMember.getId()}</div>
-      <div class="email">${teamMember.getEmail()}</div>
-      <div class="role-info">${roleInfo}</div>
-    </div>
-  </div>`;
-
+    <div class="card">
+      <div class="employee">
+          <h2>${teamMember.getName()}</h2>
+          <i class="${roleIcon}"></i><span class="role">${teamMember.getRole()}</span>
+      </div>
+      <div class="employee-info">
+        <div class="employee-id">ID: ${teamMember.getId()}</div>
+        <div class="email">${teamMember.getEmail()}</div>
+        <div class="role-info">${roleInfo}</div>
+      </div>
+    </div>`;
     cardsHTML += card;
   };
 
